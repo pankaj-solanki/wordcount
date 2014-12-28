@@ -1,1 +1,3 @@
-こんにちは
+The Java monitor pattern is used by many library classes, such as Vector and Hashtable. Sometimes a more
+sophisticated synchronization policy is needed; Chapter 11 shows how to improve scalability through finer grained
+locking strategies. The primary advantage of the Java monitor pattern is its simplicity.
