@@ -10,6 +10,7 @@
     mvn clean install
 ```
 (3) Copy target/wordcount.war into tomcat's webapp directory.
+
 (4) Pass following as JAVA_OPTS. This can be done by setting JAVA_OPTS in setclasspath.sh
 ```sh
     -Dspring.profiles.active=dev
