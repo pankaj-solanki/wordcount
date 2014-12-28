@@ -1,0 +1,11 @@
+Following the principle of instance confinement to its logical conclusion leads you to the Java monitor pattern.[2] An
+object following the Java monitor pattern encapsulates all its mutable state and guards it with the object's own intrinsic
+lock.
+
+Counter in Listing 4.1 shows a typical example of this pattern. It encapsulates one state variable, value, and all access
+to that state variable is through the methods of Counter, which are all synchronized.
+The Java monitor pattern is used by many library classes, such as Vector and Hashtable. Sometimes a more
+sophisticated synchronization policy is needed; Chapter 11 shows how to improve scalability through finer grained
+locking strategies. The primary advantage of the Java monitor pattern is its simplicity.
+The Java monitor pattern is merely a convention; any lock object could be used to guard an object's state so long as it is
+used consistently. Listing 4.3 illustrates a class that uses a private lock to guard its state.
