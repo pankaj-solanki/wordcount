@@ -11,8 +11,7 @@ import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
@@ -31,7 +30,7 @@ import wordcount.util.ConfigUtil;
 @DependsOn("configUtil")
 public class SearchServiceImpl implements SearchService {
 
-  private static final Logger logger = LoggerFactory.getLogger(SearchServiceImpl.class);
+  private static final Logger logger = Logger.getLogger(SearchServiceImpl.class);
 
   private static Map<String, Integer> wordCountMap = new HashMap<String, Integer>();
 
@@ -45,15 +44,14 @@ public class SearchServiceImpl implements SearchService {
 
   private static void loadWordCountMap() throws IOException {
     logger.info("Loading word count map.");
-    System.out.println("Loading word count map.");
     String[] inputFiles = ConfigUtil.getPropertyValueArray(Constants.INPUT_FILES_PROPERTY);
     if (inputFiles != null) {
       for (String inputFile : inputFiles) {
         logger.info("Reading file " + inputFile);
-        System.out.println("Reading file " + inputFile);
         InputStream inputStream = new ClassPathResource(inputFile).getInputStream();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
-        //BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        BufferedReader reader =
+            new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
+        // BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
         String line;
         while ((line = reader.readLine()) != null) {
           String[] words = line.toUpperCase().split(Constants.WORD_DELIMITER);
@@ -65,10 +63,6 @@ public class SearchServiceImpl implements SearchService {
             count++;
             wordCountMap.put(word, count);
           }
-        }
-        
-        for(String word : wordCountMap.keySet()){
-          System.out.println(word);          
         }
 
       }
@@ -84,13 +78,9 @@ public class SearchServiceImpl implements SearchService {
     SearchResponse response = new SearchResponse();
     String searchWord = request.getQuery().toUpperCase();
     logger.info("Querying for " + searchWord);
-    System.out.println("Querying for " + searchWord);
     Integer count = wordCountMap.get(searchWord);
     if (count == null) {
-      count = wordCountMap.get(request.getQuery());
-      if(count == null){
-        count = 0;
-      }
+      count = 0;
     }
     response.setCount(count);
     return response;
