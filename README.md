@@ -1,3 +1,4 @@
+Hello
 # Word Count Assignment
 
 ### Steps to build
